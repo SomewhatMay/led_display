@@ -12,9 +12,7 @@
 #define GPIO_DR 0x00 // Data register
 #define GPIO_DIR 0x04 // Direction register
 
-#define PIN_MAP_SIZE 16
-#define GPIO_START 0x0209C000
-#define GPIO_SPACING 0x4000
+#define PIN_MAP_SIZE 16 // Depends on the number of connections
 
 // Contains a one-to-one mapping of each pin's index (see interface.h
 // and an array that contains the pin's GPIO register index and pin mask
@@ -39,8 +37,12 @@ pinInfo pinMap[] = {
 	{GPIO4, 1 << 27, 0} // NC
 };
 
+// Reference to /dev/mem
 int fd;
 
+/**
+ * Dealocates mapped virutal memory and closes all opened files.
+ */
 void cleanup(int sig) {
     (void) sig;
     
@@ -73,6 +75,7 @@ int main() {
 	
     signal(SIGINT, cleanup);
 
+	// Attain a reference to the RAM
     fd = open("/dev/mem", O_RDWR | O_SYNC);
     if (fd < 0) {
         perror("open");
@@ -104,20 +107,18 @@ int main() {
 			}
 		}
 		
-		// assign the register to the GPIO
+		// Store the opened GPIO
 		info->gpio = gpio;
     }
     
-    
-    printf("Loaded Pins:\n");
+    /*
     for (uint32_t i = 0; i < PIN_MAP_SIZE; i++) {
 		pinInfo* info = &pinMap[i];
 		printf("Pin info: %d, %d, %p\n", info->reg, info->pin, (void*) info->gpio);
 	}
-	printf("=============\n");
+	*/
 
     setup();
-    loop();
     
     while (1) {
         loop();

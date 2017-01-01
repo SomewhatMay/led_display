@@ -59,14 +59,6 @@ void loop() {
 }
 
 void selectRow(int row) {
-	/*
-	digitalWrite(A, row & 0x01);
-	digitalWrite(B, row & 0x02);
-	digitalWrite(C, row & 0x04);
-	digitalWrite(D, row & 0x08);
-	digitalWrite(E, row & 0x10);
-	*/
-	
 	digitalWrite(A, (row >> 0) & 0x01);
 	digitalWrite(B, (row >> 1) & 0x01);
 	digitalWrite(C, (row >> 2) & 0x01);

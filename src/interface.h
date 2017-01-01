@@ -41,7 +41,24 @@ void setup();
 void loop();
 
 /* Interfacing Functions */
+
+/** 
+ * Returns associated pinInfo to the requested pin
+ */
 pinInfo* getPinInfo(uint32_t pin);
+
+/**
+ * Returns a reference to the GPIO memory reference to the pin's
+ * register
+ */
 volatile uint32_t* getGPIO(uint32_t pin);
+
+/**
+ * Sets pin to behave as either an INPUT or an OUTPUT.
+ */
 void pinMode(uint32_t pin, uint8_t direction);
+
+/**
+ * Writes data to the pin.
+ */
 void digitalWrite(uint32_t pin, uint8_t state);
