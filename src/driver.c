@@ -1,26 +1,10 @@
+#include "driver.h"
 #include "gpio.h"
 
 #include <stdio.h>
 #include <unistd.h>
 #include <time.h>
 #include <stdlib.h>
-
-#define ROW_COUNT 32
-#define COL_COUNT 64
-
-#define R_ROW_COUNT 64 // Real row count
-#define R_COL_COUNT COL_COUNT // Real col count
-
-uint8_t COLORS[][3] = {
-  {0, 0, 0},
-  {1, 1, 1},
-  {1, 0, 0},
-  {0, 1, 0},
-  {0, 0, 1},
-  {1, 1, 0},
-  {0, 1, 1},
-  {1, 0, 1}
-};
 
 uint8_t displayState[R_ROW_COUNT][R_COL_COUNT];
 
@@ -30,9 +14,6 @@ clock_t start;
 void selectRow(uint32_t row);
 void refreshDisplay();
 void incrementFramerate();
-
-void setStateOff();
-void setStateRandom();
 
 void setup() {
   setbuf(stdout, NULL);
@@ -56,25 +37,26 @@ void setup() {
   pinMode(LAT, OUTPUT);
   pinMode(OE, OUTPUT);
   
-  setStateOff();
+  paintSolid(0);
   
   start = clock();
 }
 
 void loop() {
   refreshDisplay();
+  paintRandom();
   incrementFramerate();
 }
 
-void setStateOff() {
+void paintSolid(uint8_t color) {
   for (uint32_t row = 0; row < R_ROW_COUNT; row++) {
     for (uint32_t col = 0; col < R_COL_COUNT; col++) {
-      displayState[row][col] = 0;
+      displayState[row][col] = color;
     }
   }
 }
 
-void setStateRandom() {
+void paintRandom() {
   for (uint32_t row = 0; row < R_ROW_COUNT; row++) {
     for (uint32_t col = 0; col < R_COL_COUNT; col++) {
       displayState[row][col] = rand() % 8;
