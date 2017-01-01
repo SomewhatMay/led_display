@@ -8,6 +8,8 @@
 
 /* Pins */
 #define CLK 0x020A0000, (1 << 25) // <register>, <pin mask>
+#define OE 0x020A0000, (1 << 35)
+#define LAT 0x020A0000, (1 << 32)
 
 /* User Defined Functions*/
 void setup();
