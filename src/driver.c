@@ -31,8 +31,12 @@ void selectRow(uint32_t row);
 void refreshDisplay();
 void incrementFramerate();
 
+void setStateOff();
+void setStateRandom();
+
 void setup() {
   setbuf(stdout, NULL);
+  srand(time(NULL));
 	
   pinMode(R1, OUTPUT);
   pinMode(G1, OUTPUT);
@@ -52,25 +56,30 @@ void setup() {
   pinMode(LAT, OUTPUT);
   pinMode(OE, OUTPUT);
   
+  setStateOff();
+  
+  start = clock();
+}
+
+void loop() {
+  refreshDisplay();
+  incrementFramerate();
+}
+
+void setStateOff() {
   for (uint32_t row = 0; row < R_ROW_COUNT; row++) {
     for (uint32_t col = 0; col < R_COL_COUNT; col++) {
       displayState[row][col] = 0;
     }
   }
-  
-  start = clock();
-  
-  for (uint32_t row = 0; row < R_ROW_COUNT; row++) {
-    for (uint32_t col = 0; col < R_COL_COUNT; col++) {
-      
-      displayState[row][col] = 1;
-    }
-  }
 }
 
-void loop() {
-  refreshDisplay();
-  //incrementFramerate();
+void setStateRandom() {
+  for (uint32_t row = 0; row < R_ROW_COUNT; row++) {
+    for (uint32_t col = 0; col < R_COL_COUNT; col++) {
+      displayState[row][col] = rand() % 8;
+    }
+  }
 }
 
 void refreshDisplay() {
@@ -100,6 +109,9 @@ void refreshDisplay() {
 
     digitalWrite(OE, LOW);
   }
+  
+  usleep(300);
+  digitalWrite(OE, HIGH);
 }
 
 void selectRow(uint32_t row) {
