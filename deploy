@@ -1,0 +1,30 @@
+#!/bin/bash
+
+_src_dir="./src"
+
+_autocomplete_src_files() {
+        COMREPLY=($(compgen -f -X '!*.c' "$_src_dir/${COMP_WORDS[1]}"))
+}
+complete -F _autocomplete_src_files $(basename "$0")
+
+# Check for filename
+if [ -z "$1" ]; then
+        echo "Usage: $0 <filename>"
+        exit 1
+fi
+
+src_file="$_src_dir/$1.c"
+
+if [ ! -f "$src_file" ]; then
+        echo "Error: file '$src_file' not found."
+        exit 1
+fi
+
+# Compile
+gcc -std=gnu99 -I./ledlib ./ledlib/gpio.c ./ledlib/driver.c ./ledlib/imgread.c "$src_file" -o app
+if [ $? -ne 0 ]; then
+        echo "Compilation failed."
+        exit 1
+fi
+
+sudo ./app

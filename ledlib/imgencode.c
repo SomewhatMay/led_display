@@ -19,12 +19,14 @@ int main() {
     data[i] = i % 2 == 0 ? 1 : 0;
   }
   
+  /*
   printf("Data to be written:\n");  
   printf("   ");
   for (uint32_t col = 0; col < DATA_COLS; col++) {
     printf("%d: ", col);
   }
   printf("\n");
+  
   
   for (uint32_t row = 0; row < DATA_ROWS; row++) {
     printf("%d: ", row);
@@ -38,6 +40,7 @@ int main() {
     
     printf("\n");
   }
+  */
   
   fwrite(data, 1, sizeof(data), file);
   
