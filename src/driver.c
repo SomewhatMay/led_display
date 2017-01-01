@@ -6,8 +6,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-uint8_t displayState[R_ROW_COUNT][R_COL_COUNT];
-
 uint32_t currentFrameCount = 0;
 clock_t start;
 

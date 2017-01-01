@@ -19,5 +19,7 @@ uint8_t COLORS[][3] = {
   {1, 0, 1}
 };
 
+uint8_t displayState[R_ROW_COUNT][R_COL_COUNT];
+
 void paintSolid(uint8_t color);
 void paintRandom();
