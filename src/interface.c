@@ -12,7 +12,7 @@
 #define GPIO_DR 0x00 // Data register
 #define GPIO_DIR 0x04 // Direction register
 
-#define PIN_MAP_SIZE 1
+#define PIN_MAP_SIZE 16
 #define GPIO_START 0x0209C000
 #define GPIO_SPACING 0x4000
 
@@ -21,7 +21,22 @@
 // Array size is 16 by 2 by convention
 // Note: Update PIN_MAP_SIZE when updating this
 pinInfo pinMap[] = {
-	{0x020A0000, 1 << 25, 0} // GPIO2_25 (pin 50)
+	{GPIO5, 1 << 15, 0},
+	{GPIO5, 1 << 14, 0},
+	{GPIO5, 1 << 13, 0},
+	{GPIO5, 1 << 12, 0}, // NC
+	{GPIO5, 1 << 11, 0},
+	{GPIO5, 1 << 10, 0},
+	{GPIO5, 1 << 9, 0},
+	{GPIO5, 1 << 8, 0},
+	{GPIO5, 1 << 7, 0},
+	{GPIO5, 1 << 6, 0},
+	{GPIO5, 1 << 5, 0},
+	{GPIO4, 1 << 31, 0},
+	{GPIO4, 1 << 30, 0},
+	{GPIO4, 1 << 29, 0},
+	{GPIO4, 1 << 28, 0},
+	{GPIO4, 1 << 27, 0} // NC
 };
 
 int fd;
@@ -66,7 +81,7 @@ int main() {
     
     // Open all registers
     for (uint32_t i = 0; i < PIN_MAP_SIZE; i++) {
-        pinInfo* info = &pinMap[i];
+        pinInfo* info = &(pinMap[i]);
         volatile uint32_t* gpio = 0;
         
         // Verify that current register is not already open
@@ -92,9 +107,18 @@ int main() {
 		// assign the register to the GPIO
 		info->gpio = gpio;
     }
+    
+    
+    printf("Loaded Pins:\n");
+    for (uint32_t i = 0; i < PIN_MAP_SIZE; i++) {
+		pinInfo* info = &pinMap[i];
+		printf("Pin info: %d, %d, %p\n", info->reg, info->pin, (void*) info->gpio);
+	}
+	printf("=============\n");
 
     setup();
-
+    loop();
+    
     while (1) {
         loop();
     }
@@ -103,7 +127,7 @@ int main() {
 }
 
 pinInfo* getPinInfo(uint32_t pin) {
-	return &pinMap[pin];
+	return &(pinMap[pin]);
 }
 
 volatile uint32_t* getGPIO(uint32_t pin) {

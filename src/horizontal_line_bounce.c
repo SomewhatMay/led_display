@@ -35,13 +35,39 @@ int direction = 1;
 void loop() {
 	for (int row = 0; row < ROW_COUNT; row++) {
 		for (int col = 0; col < COL_COUNT; col++) {
-			digitalWrite(R1, HIGH);
+			digitalWrite(R1, LOW);
 			digitalWrite(G1, LOW);
 			digitalWrite(B1, LOW);
 			
-			digitalWrite(R2, HIGH);
+			digitalWrite(R2, LOW);
 			digitalWrite(G2, LOW);
 			digitalWrite(B2, LOW);
+			
+			if (row == targetIndex) {
+				digitalWrite(R1, HIGH);
+				digitalWrite(G1, HIGH);
+				digitalWrite(B1, HIGH);
+			}
+			
+			if (32 + row == targetIndex) {
+				digitalWrite(R2, HIGH);
+				digitalWrite(G2, HIGH);
+				digitalWrite(B2, HIGH);
+			}
+			
+			/*
+			if (row == targetIndex) {
+				digitalWrite(R1, HIGH);
+				digitalWrite(G1, HIGH);
+				digitalWrite(B1, HIGH);
+			}
+			
+			if (32 + row == targetIndex) {
+				digitalWrite(R2, HIGH);
+				digitalWrite(G2, HIGH);
+				digitalWrite(B2, HIGH);
+			}
+			*/
 			
 			digitalWrite(CLK, HIGH);
 			digitalWrite(CLK, LOW);
@@ -55,6 +81,11 @@ void loop() {
 		selectRow(row);
 		
 		digitalWrite(OE, LOW);
+	}
+	
+	targetIndex += direction;
+	if (targetIndex <= 0 || targetIndex >= 64) {
+		direction *= -1;
 	}
 }
 
