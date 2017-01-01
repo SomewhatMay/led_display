@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root"
-  exit 1
+if [ -z "$1" ]; then
+	echo "Usage: $0 <filename>"
+	exit 1
 fi
 
-gcc -std=gnu99 gpio.c $1.c -o app
+gcc -std=gnu99 gpio.c "$1.c" -o app
 sudo ./app
