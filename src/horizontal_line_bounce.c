@@ -55,20 +55,6 @@ void loop() {
 				digitalWrite(B2, HIGH);
 			}
 			
-			/*
-			if (row == targetIndex) {
-				digitalWrite(R1, HIGH);
-				digitalWrite(G1, HIGH);
-				digitalWrite(B1, HIGH);
-			}
-			
-			if (32 + row == targetIndex) {
-				digitalWrite(R2, HIGH);
-				digitalWrite(G2, HIGH);
-				digitalWrite(B2, HIGH);
-			}
-			*/
-			
 			digitalWrite(CLK, HIGH);
 			digitalWrite(CLK, LOW);
 		}
@@ -90,17 +76,9 @@ void loop() {
 }
 
 void selectRow(int row) {
-	/*
 	digitalWrite(A, row & 0x01);
 	digitalWrite(B, row & 0x02);
 	digitalWrite(C, row & 0x04);
 	digitalWrite(D, row & 0x08);
 	digitalWrite(E, row & 0x10);
-	*/
-	
-	digitalWrite(A, (row >> 0) & 0x01);
-	digitalWrite(B, (row >> 1) & 0x01);
-	digitalWrite(C, (row >> 2) & 0x01);
-	digitalWrite(D, (row >> 3) & 0x01);
-	digitalWrite(E, (row >> 4) & 0x01);
 }
