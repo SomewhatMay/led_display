@@ -36,12 +36,12 @@ void loop() {
 	for (int row = 0; row < ROW_COUNT; row++) {
 		for (int col = 0; col < COL_COUNT; col++) {
 			digitalWrite(R1, HIGH);
-			digitalWrite(G1, LOW);
-			digitalWrite(B1, LOW);
+			digitalWrite(G1, HIGH);
+			digitalWrite(B1, HIGH);
 			
 			digitalWrite(R2, HIGH);
-			digitalWrite(G2, LOW);
-			digitalWrite(B2, LOW);
+			digitalWrite(G2, HIGH);
+			digitalWrite(B2, HIGH); 
 			
 			digitalWrite(CLK, HIGH);
 			digitalWrite(CLK, LOW);
