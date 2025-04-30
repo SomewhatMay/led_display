@@ -8,18 +8,20 @@
 #define LOW 0
 #define HIGH 1
 
-#define GPIO4 0x020A8000
-#define GPIO5 0x020AC000
-
 typedef struct {
 	uint32_t reg; // Register Index
 	uint32_t pin; // Pin Mask
 	
 	volatile uint32_t* gpio; // GPIO relating to reg
-} pinInfo;
+} pin_info;
+
+
+/* Pins - Indices in an array - DO NOT CHANGE */
 
 // #define CLK 0x020A0000, (1 << 25) // <register>, <pin mask>
-/* Pins - Indices in an array - DO NOT CHANGE */
+#define GPIO4 0x020A8000
+#define GPIO5 0x020AC000
+
 // Even: Cable A, Odd: Cable B
 #define R1 0
 #define G1 1
@@ -39,19 +41,31 @@ typedef struct {
 #define GND2 15 // NC
 
 /* User Defined Functions*/
+
+/**
+ * Executed once, before loop().
+ * 
+ * @note it is safe to call pinMode and digitalWrite, as registers are mapped
+ *				before setup() is called
+ */
 void setup();
+
+/**
+ * Executed indefinitely without any delay. If a delay is needed, users
+ * must use usleep or an equivalent sleep function where appropriate.
+ */
 void loop();
 
 /* Interfacing Functions */
 
 /** 
- * Returns associated pinInfo to the requested pin
+ * Returns pin's pinInfo.
  */
-pinInfo* getPinInfo(uint32_t pin);
+pin_info* getPinInfo(uint32_t pin);
 
 /**
- * Returns a reference to the GPIO memory reference to the pin's
- * register
+ * Returns a reference to the GPIO mapping (memory register) that 
+ * controls the pin.
  */
 volatile uint32_t* getGPIO(uint32_t pin);
 
@@ -61,6 +75,6 @@ volatile uint32_t* getGPIO(uint32_t pin);
 void pinMode(uint32_t pin, uint8_t direction);
 
 /**
- * Writes data to the pin.
+ * Sets the state of an OUTPUT pin to either HIGH or LOW.
  */
 void digitalWrite(uint32_t pin, uint8_t state);

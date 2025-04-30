@@ -7,7 +7,7 @@
 #define COL_COUNT 64
 
 void setup() {
-	setbuf(stdout, NULL);
+	// setbuf(stdout, NULL);
 	
 	pinMode(R1, OUTPUT);
 	pinMode(G1, OUTPUT);
