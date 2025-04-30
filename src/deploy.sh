@@ -5,5 +5,5 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-gcc -std=gnu99 interface.c $1.c -o app
+gcc -std=gnu99 gpio.c $1.c -o app
 sudo ./app

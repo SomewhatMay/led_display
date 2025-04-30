@@ -1,4 +1,4 @@
-#include "interface.h"
+#include "gpio.h"
 
 #include <fcntl.h>
 #include <signal.h>
