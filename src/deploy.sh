@@ -5,5 +5,5 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-gcc -std=gnu99 gpio.c "$1.c" -o app
+gcc -std=gnu99 ./ledlib/gpio.c "./src/$1.c" -o app
 sudo ./app

@@ -6,6 +6,17 @@
 #include <time.h>
 #include <stdlib.h>
 
+uint8_t COLORS[][3] = {
+  {0, 0, 0},
+  {1, 1, 1},
+  {1, 0, 0},
+  {0, 1, 0},
+  {0, 0, 1},
+  {1, 1, 0},
+  {0, 1, 1},
+  {1, 0, 1}
+};
+
 uint32_t currentFrameCount = 0;
 clock_t start;
 
@@ -38,11 +49,13 @@ void setup() {
   paintSolid(0);
   
   start = clock();
+  
+  onLoad();
 }
 
 void loop() {
+  onUpdate();
   refreshDisplay();
-  paintRandom();
   incrementFramerate();
 }
 
